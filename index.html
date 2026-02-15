@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Aegis – Emergency Control Dashboard</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: "Segoe UI", sans-serif;
+            background-color: #0f172a;
+            color: white;
+        }
+        header {
+            background-color: #111827;
+            padding: 15px 30px;
+            font-size: 22px;
+            font-weight: 600;
+            border-bottom: 1px solid #1f2937;
+        }
+        .container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            padding: 20px;
+        }
+        .card {
+            background-color: #1e293b;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.4);
+        }
+        button {
+            margin: 5px;
+            padding: 8px 12px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-weight: 500;
+        }
+        .primary-btn {
+            background-color: #2563eb;
+            color: white;
+        }
+        input {
+            width: 70px;
+            margin: 5px;
+            padding: 4px;
+        }
+        #output {
+            background-color: #0f172a;
+            padding: 15px;
+            border-radius: 6px;
+            border: 1px solid #1f2937;
+            margin-top: 15px;
+            min-height: 120px;
+        }
+    </style>
+</head>
+
+<body>
+
+<header>
+    AEGIS – Emergency Operations Control Panel
+</header>
+
+<div class="container">
+
+    <!-- CAMERA INPUT -->
+    <div class="card">
+        <h3>Emergency Coordinate Input</h3>
+        X <input type="number" id="xCoord">
+        Z <input type="number" id="zCoord">
+        <br>
+        <button class="primary-btn" onclick="findNearestCamera()">
+            Check Nearest Camera
+        </button>
+    </div>
+
+    <!-- SYSTEM OUTPUT -->
+    <div class="card">
+        <h3>Emergency Camera Output</h3>
+        <div id="output"></div>
+    </div>
+
+</div>
+
+<script>
+const cameras = [
+    { name: "Cam A1", port: "Port A", x: -30, z: 0 },
+    { name: "Cam A2", port: "Port A", x: 30, z: 0 },
+    { name: "Cam B1", port: "Port B", x: 470, z: 0 },
+    { name: "Cam B2", port: "Port B", x: 530, z: 0 },
+    { name: "Cam C1", port: "Port C", x: 220, z: 400 },
+    { name: "Cam C2", port: "Port C", x: 280, z: 400 }
+];
+
+function distance(x1, z1, x2, z2) {
+    return Math.sqrt((x1 - x2) ** 2 + (z1 - z2) ** 2);
+}
+
+function findNearestCamera() {
+    const x = Number(document.getElementById("xCoord").value);
+    const z = Number(document.getElementById("zCoord").value);
+
+    let nearest = null;
+    let minDist = Infinity;
+
+    cameras.forEach(cam => {
+        const d = distance(x, z, cam.x, cam.z);
+        if (d < minDist) {
+            minDist = d;
+            nearest = cam;
+        }
+    });
+
+    document.getElementById("output").innerHTML =
+        "<b>Nearest Camera:</b> " + nearest.name + "<br>" +
+        "<b>Port:</b> " + nearest.port + "<br>" +
+        "<b>Distance:</b> " + minDist.toFixed(2) + " meters";
+}
+</script>
+
+</body>
+</html>
