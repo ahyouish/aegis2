@@ -85,12 +85,12 @@
 
 <script>
 const cameras = [
-    { name: "Cam A1", port: "Port A", x: -30, z: 0 },
-    { name: "Cam A2", port: "Port A", x: 30, z: 0 },
-    { name: "Cam B1", port: "Port B", x: 470, z: 0 },
-    { name: "Cam B2", port: "Port B", x: 530, z: 0 },
-    { name: "Cam C1", port: "Port C", x: 220, z: 400 },
-    { name: "Cam C2", port: "Port C", x: 280, z: 400 }
+    { name: "Cam A1", port: "ZONE A", x: -30, z: 0 },
+    { name: "Cam A2", port: "ZONE A", x: 30, z: 0 },
+    { name: "Cam B1", port: "ZONE B", x: 470, z: 0 },
+    { name: "Cam B2", port: "ZONE B", x: 530, z: 0 },
+    { name: "Cam C1", port: "ZONE C", x: 220, z: 400 },
+    { name: "Cam C2", port: "ZONE C", x: 280, z: 400 }
 ];
 
 function distance(x1, z1, x2, z2) {
@@ -114,7 +114,7 @@ function findNearestCamera() {
 
     document.getElementById("output").innerHTML =
         "<b>Nearest Camera:</b> " + nearest.name + "<br>" +
-        "<b>Port:</b> " + nearest.port + "<br>" +
+        "<b>ZONE:</b> " + nearest.port + "<br>" +
         "<b>Distance:</b> " + minDist.toFixed(2) + " meters";
 }
 </script>
